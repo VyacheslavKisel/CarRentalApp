@@ -1,0 +1,38 @@
+﻿@model Service.Models.Car
+
+@{
+    ViewBag.Title = "EditCar";
+}
+
+<h2>EditCar</h2>
+
+<h2>Автомобиль № @Model.Id</h2>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <p>
+        <label>Название</label>
+        @Html.EditorFor(m => m.Title)
+        @Html.ValidationMessageFor(m => m.Title)
+    </p>
+    <p>
+        <label>Марка</label>
+        @Html.EditorFor(m => m.Brand)
+        @Html.ValidationMessageFor(m => m.Brand)
+    </p>
+    <p>
+        <label>Класс качества</label>
+        @Html.EditorFor(m => m.QulityClass)
+        @Html.ValidationMessageFor(m => m.QulityClass)
+    </p>
+    <p>
+        <label>Стоимость проката</label>
+        @Html.EditorFor(m => m.Price)
+        @Html.ValidationMessageFor(m => m.Price)
+    </p>
+    <input type="submit" value="Редактировать" />
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

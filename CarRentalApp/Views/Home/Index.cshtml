@@ -1,0 +1,70 @@
+﻿@model Service.ViewModels.CarsListViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Get))
+{
+    <p>Фильтры</p>
+    <p>
+        Цена
+    </p>
+    <p>
+        <label>В произвольном порядке</label>
+        <input type="radio" name="SortPrice" value="NotSort" checked />
+        <label>По возрастанию</label>
+        <input type="radio" name="SortPrice" value="SortAscending" />
+        <label>По убыванию</label>
+        <input type="radio" name="SortPrice" value="SortDescending" />
+    </p>
+    <p>
+        Название
+    </p>
+    <p>
+        <label>В произвольном порядке</label>
+        <input type="radio" name="SortTitle" value="NotSort" checked />
+        <label>По возрастанию</label>
+        <input type="radio" name="SortTitle" value="SortAscending" />
+        <label>По убыванию</label>
+        <input type="radio" name="SortTitle" value="SortDescending" />
+    </p>
+    <div>
+        <label>Марка: </label>
+        @foreach (var item in Model.Brands)
+        {
+            <label>@item</label>
+            <input type="checkbox" name="BrandsSelected" value="@item" />
+        }
+    </div>
+    <div>
+        <label>Класс качества: </label>
+        @foreach (var item in Model.QualityClasses)
+        {
+            <label>@item</label>
+            <input type="checkbox" name="QualityClassesSelected" value="@item" />
+        }
+    </div>
+    <input type="submit" value="Фильтр" />
+}
+
+<table>
+    @foreach (var item in Model.Cars)
+    {
+        if (item.AvailabilityNow == true)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.Brand</td>
+                <td>@item.QulityClass</td>
+                <td>@item.Price</td>
+                <td>@Html.RouteLink("Сделать заказ", new { controller = "Order", action = "Order", id = item.Id })</td>
+                @if (User.IsInRole("admin"))
+                {
+                    <td>@Html.RouteLink("Редактировать", new { controller = "Car", action = "EditCar", id = item.Id })</td>
+                    <td>@Html.RouteLink("Удалить", new { controller = "Car", action = "DeleteCar", id = item.Id })</td>
+                }
+            </tr>
+        }
+    }
+</table>

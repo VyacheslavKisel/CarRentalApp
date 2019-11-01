@@ -1,0 +1,147 @@
+﻿@model Service.Models.Order
+
+@{
+    ViewBag.Title = "DetailsOrder";
+}
+
+<h2>DetailsOrder</h2>
+
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PassportData)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PassportData)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FinalDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FinalDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AvailabilityDriver)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AvailabilityDriver)
+        </dd>
+
+        <dd>
+            @Html.DisplayNameFor(model => model.Invoice)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.Invoice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderStatus.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderStatus.Name)
+        </dd>
+
+
+
+    </dl>
+</div>
+
+@if (Model.OrderStatus.Id == 1)
+{
+    using (Html.BeginForm())
+    {
+        <input type="hidden" value="@Model.Id" name="OrderId" />
+        <p>
+            <span>Принять заказ</span>
+            <input type="radio" name="Decision" value="accept" checked />
+        </p>
+        <div>
+            <span>Отклонить заказ</span>
+            <input type="radio" name="Decision" value="decline" />
+            <p><label>Причина отаказа</label><input type="text" name="Reason" /></p>
+        </div>
+        <input type="submit" value="Рассмотреть заказ" />
+    }
+}
+else if (Model.OrderStatus.Id == 3)
+{
+    using (Html.BeginForm())
+    {
+        <input type="hidden" value="@Model.Id" name="OrderId" />
+        <p>
+            <span>Заказ оплачен</span>
+            <input type="radio" name="Decision" value="paid" checked />
+        </p>
+        <div>
+            <span>Заказ не оплачен во время согласно договору</span>
+            <input type="radio" name="Decision" value="decline" />
+            <p><label>Причина отаказа</label><input type="text" name="Reason" /></p>
+        </div>
+        <input type="submit" value="Рассмотреть заказ" />
+    }
+}
+else if (Model.OrderStatus.Id == 4)
+{
+    using (Html.BeginForm())
+    {
+        <input type="hidden" value="@Model.Id" name="OrderId" />
+        <p>
+            <span>Клиент получил автомобиль</span>
+            <input type="radio" name="Decision" value="received" checked />
+        </p>
+        <input type="submit" value="Рассмотреть заказ" />
+    }
+}
+else if (Model.OrderStatus.Id == 5)
+{
+    <h2>Возврат автомобиля</h2>
+    using (Html.BeginForm())
+    {
+        <input type="hidden" value="@Model.Id" name="OrderId" />
+        <input type="hidden" value="return" name="Decision" />
+        <p>
+            <span>Время возврата</span>
+            <input type="text" name="ReturnTime" />
+        </p>
+        <p>В случае, если есть повреждения автомобиля:</p>
+        <p>
+            <span>Описание повреждения</span>
+            <input type="text" name="Description" />
+        </p>
+        <p>
+            <span>Стоимость ремонта</span>
+            <input type="text" name="CostRepair" />
+        </p>
+        <input type="submit" value="Зарегистрировать возврат" />
+    }
+}
+else if (Model.OrderStatus.Id == 6)
+{
+    using (Html.BeginForm())
+    {
+        <input type="hidden" value="@Model.Id" name="OrderId" />
+        <p>
+            <span>Оплачен долг</span>
+            <input type="radio" name="Decision" value="debtRepaid" checked />
+        </p>
+        <input type="submit" value="Долг оплачен" />
+    }
+}
+

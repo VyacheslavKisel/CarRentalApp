@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Service.Models.Order>
+
+@{
+    ViewBag.Title = "DetailsOrders";
+}
+
+<h2>DetailsOrders</h2>
+
+
+<table>
+    @foreach (var item in Model)
+    {
+        if (item.OrderStatusId == 1 || item.ManagerProfile.ApplicationUser.Email == User.Identity.Name)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PassportData)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FinalDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvailabilityDriver)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Car.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Car.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Car.QulityClass)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Car.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Invoice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderStatus.Name)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Рассмотреть заказ", "DetailsOrder", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    }
+</table>

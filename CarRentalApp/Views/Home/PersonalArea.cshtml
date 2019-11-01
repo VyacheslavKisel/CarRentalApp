@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Service.Models.Order>
+@{
+    ViewBag.Title = "PersonalArea";
+}
+
+<h2>PersonalArea</h2>
+
+@foreach (var item in Model)
+{
+    if (item.InvoiceMessage)
+    {
+        <p>@item.Invoice</p>
+    }
+    if (item.ReturnCar != null && item.ReturnCar.DamageCar != null)
+    {
+        if (item.ReturnCar.DamageCar.InvoiceMessage)
+        {
+            <p>@item.ReturnCar.DamageCar.CostRepair</p>
+        }
+    }
+}
+

@@ -1,0 +1,39 @@
+﻿@model Service.Models.Order
+
+@{
+    ViewBag.Title = "Order";
+}
+
+<h2>Order</h2>
+
+@using (Html.BeginForm("Order", "Order", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+
+    @*1*@
+    <input type="hidden" value="@ViewBag.UserId" name="ClientProfileId" />
+    <input type="hidden" value="@ViewBag.CarId" name="CarId" />
+    <input type="hidden" value="1" name="OrderStatusId" />
+    <p>
+        <label>Паспортные данные</label>
+        @Html.EditorFor(m => m.PassportData)
+        @Html.ValidationMessageFor(m => m.PassportData)
+    </p>
+    <p>
+        <label>Начальная дата</label>
+        @Html.EditorFor(m => m.StartDate)
+        @Html.ValidationMessageFor(m => m.StartDate)
+    </p>
+    <p>
+        <label>Конечная дата</label>
+        @Html.EditorFor(m => m.FinalDate)
+        @Html.ValidationMessageFor(m => m.FinalDate)
+    </p>
+    <p>
+        <label>С водителем или без?</label>
+        @Html.EditorFor(m => m.AvailabilityDriver)
+        @Html.ValidationMessageFor(m => m.AvailabilityDriver)
+    </p>
+    <input type="submit" value="Сделать заказ" />
+}
+

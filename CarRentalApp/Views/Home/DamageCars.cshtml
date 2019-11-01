@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Service.Models.DamageCar>
+
+@{
+    ViewBag.Title = "DamageCars";
+}
+
+<h2>DamageCars</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CostRepair)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnderRepairNow)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (item.ReturnCar.Order.ManagerProfile.ApplicationUser.Email == User.Identity.Name)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CostRepair)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnderRepairNow)
+                </td>
+                <td>
+                    @if (item.UnderRepairNow)
+                    {
+                        using (Html.BeginForm())
+                        {
+                            <input type="hidden" name="UnderRepairNow" value="false" />
+                            <input type="hidden" name="Id" value="@item.Id" />
+                            <input type="submit" value="Автомобиль вернули с ремонта" />
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    }
+
+</table>
