@@ -7,8 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 
-namespace Service
+namespace Service.EF
 {
+    // Контекст базы данных
     public class ApplicationContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationContext() : base("RentalCarContext")

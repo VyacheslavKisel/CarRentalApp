@@ -8,6 +8,8 @@ using System.Web.Mvc;
 
 namespace Service.ViewModels
 {
+    // Модель представления автомобиля, который является 
+    // элементом списка автомобилей доступных для аренды
     public class CarsListViewModel
     {
         public IEnumerable<Car> Cars { set; get; }

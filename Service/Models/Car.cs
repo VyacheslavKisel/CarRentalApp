@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Service.Models
 {
+    // Модель автомобиля
     public class Car
     {
         public int Id { set; get; }

@@ -1,34 +1,47 @@
-﻿@model Service.Models.Car
+﻿@model Service.ViewModels.CarViewModel
 
 @{
     ViewBag.Title = "CreateCar";
 }
 
-<h2>CreateCar</h2>
+<h2>Добавить автомобиль</h2>
 
 @using (Html.BeginForm())
 {
+<dl>
     @Html.ValidationSummary(true)
-    <p>
-        <label>Название</label>
+    <dd>
+        Название
+    </dd>
+    <dd>
         @Html.EditorFor(m => m.Title)
         @Html.ValidationMessageFor(m => m.Title)
-    </p>
-    <p>
-        <label>Марка</label>
+    </dd>
+    <br />
+    <dd>
+        Марка
+    </dd>
+    <dd>
         @Html.EditorFor(m => m.Brand)
         @Html.ValidationMessageFor(m => m.Brand)
-    </p>
-    <p>
-        <label>Класс качества</label>
+    </dd>
+    <br />
+    <dd>
+        Класс качества
+    </dd>
+    <dd>
         @Html.EditorFor(m => m.QulityClass)
         @Html.ValidationMessageFor(m => m.QulityClass)
-    </p>
-    <p>
-        <label>Стоимость проката</label>
+    </dd>
+    <br />
+    <dd>
+        Стоимость проката за сутки
+    </dd>
+    <dd>
         @Html.EditorFor(m => m.Price)
         @Html.ValidationMessageFor(m => m.Price)
-    </p>
+    </dd>
+</dl>
     <input type="submit" value="Добавить автомобиль" />
 }
 

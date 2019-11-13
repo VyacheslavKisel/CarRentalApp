@@ -1,4 +1,4 @@
-﻿@model Service.Models.Order
+﻿@model Service.ViewModels.OrderDisplay
 
 @{
     ViewBag.Title = "DetailsOrder";
@@ -11,7 +11,7 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.PassportData)
+            Паспортные данные
         </dt>
 
         <dd>
@@ -19,7 +19,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.StartDate)
+            Начальная дата аренды
         </dt>
 
         <dd>
@@ -27,7 +27,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.FinalDate)
+            Конечная дата аренды
         </dt>
 
         <dd>
@@ -35,27 +35,35 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.AvailabilityDriver)
+            Наличие водителя
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.AvailabilityDriver)
         </dd>
 
-        <dd>
-            @Html.DisplayNameFor(model => model.Invoice)
-        </dd>
+        @*<dd>
+                @Html.DisplayNameFor(model => model.PricePerDay)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Invoice)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.PricePerDay)
+            </dd>
+
+            <dd>
+                @Html.DisplayNameFor(model => model.Invoice)
+            </dd>
+
+            <dd>
+                @Html.DisplayFor(model => model.Invoice)
+            </dd>*@
 
         <dt>
-            @Html.DisplayNameFor(model => model.OrderStatus.Name)
+            @Html.DisplayNameFor(model => model.NameOrderStatus)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.OrderStatus.Name)
+            @Html.DisplayFor(model => model.NameOrderStatus)
         </dd>
 
 
@@ -63,7 +71,7 @@
     </dl>
 </div>
 
-@if (Model.OrderStatus.Id == 1)
+@if (Model.NameOrderStatus == "Новый")
 {
     using (Html.BeginForm())
     {
@@ -80,7 +88,8 @@
         <input type="submit" value="Рассмотреть заказ" />
     }
 }
-else if (Model.OrderStatus.Id == 3)
+//3
+else if (Model.NameOrderStatus == "Согласованный")
 {
     using (Html.BeginForm())
     {
@@ -97,7 +106,8 @@ else if (Model.OrderStatus.Id == 3)
         <input type="submit" value="Рассмотреть заказ" />
     }
 }
-else if (Model.OrderStatus.Id == 4)
+//4
+else if (Model.NameOrderStatus == "Оплаченный")
 {
     using (Html.BeginForm())
     {
@@ -109,16 +119,21 @@ else if (Model.OrderStatus.Id == 4)
         <input type="submit" value="Рассмотреть заказ" />
     }
 }
-else if (Model.OrderStatus.Id == 5)
+//5
+else if (Model.NameOrderStatus == "Автомобиль у клиента")
 {
     <h2>Возврат автомобиля</h2>
     using (Html.BeginForm())
     {
+        @Html.ValidationSummary(true)
+
         <input type="hidden" value="@Model.Id" name="OrderId" />
         <input type="hidden" value="return" name="Decision" />
         <p>
             <span>Время возврата</span>
-            <input type="text" name="ReturnTime" />
+            @Html.ValidationMessage("ReturnTime")
+            @Html.Editor("ReturnTime")
+            @*<input type="text" name="ReturnTime" />*@
         </p>
         <p>В случае, если есть повреждения автомобиля:</p>
         <p>
@@ -132,7 +147,8 @@ else if (Model.OrderStatus.Id == 5)
         <input type="submit" value="Зарегистрировать возврат" />
     }
 }
-else if (Model.OrderStatus.Id == 6)
+//6
+else if (Model.NameOrderStatus == "Автомобиль возвращен с повреждениями, долг клиента")
 {
     using (Html.BeginForm())
     {
@@ -144,4 +160,3 @@ else if (Model.OrderStatus.Id == 6)
         <input type="submit" value="Долг оплачен" />
     }
 }
-

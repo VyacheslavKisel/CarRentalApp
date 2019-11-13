@@ -8,18 +8,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Service.EF;
 
 namespace Service
 {
+    // Уровень доступа к роли пользователя
     public class ApplicationRoleManager : RoleManager<ApplicationRole>
     {
         public ApplicationRoleManager(IRoleStore<ApplicationRole, string> store) : base(store)
         {
         }
 
-        //Метод Create позволит классу приложения OWIN создавать 
-        //экземпляры менеджера ролей для обработки каждого запроса, 
-        //где идет обращение к хранилищу ролей RoleStore.
         public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options,
                                             IOwinContext context)
         {

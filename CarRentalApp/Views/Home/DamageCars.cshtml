@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Service.Models.DamageCar>
+﻿@model IEnumerable<Service.ViewModels.DamageCarArticleList>
 
 @{
     ViewBag.Title = "DamageCars";
@@ -10,20 +10,20 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            Описание повреждения
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CostRepair)
+            Стоимость ремонта
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UnderRepairNow)
+            Находится под ремонтом сейчас?
         </th>
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
-        if (item.ReturnCar.Order.ManagerProfile.ApplicationUser.Email == User.Identity.Name)
+        if(item.ManagerEmail == ViewBag.ManagerEmail)
         {
             <tr>
                 <td>

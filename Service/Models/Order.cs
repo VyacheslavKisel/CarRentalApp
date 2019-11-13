@@ -8,19 +8,17 @@ using System.Threading.Tasks;
 
 namespace Service.Models
 {
+    // Модель заказа
     public class Order
     {
         public int Id { set; get; }
-        [Required]
         public string PassportData { set; get; }
-        [Required]
         public DateTime StartDate { set; get; }
-        [Required]
         public DateTime FinalDate { set; get; }
+        public bool AvailabilityDriver { set; get; }
 
         public bool InvoiceMessage { set; get; }
         public double Invoice { set; get; }
-        public bool AvailabilityDriver { set; get; }
 
         public int CarId { set; get; }
         public virtual Car Car { set; get; }

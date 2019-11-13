@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Service.Models
 {
+    // Модель поврежденного автомобиля
     public class DamageCar
     {
         [Key]

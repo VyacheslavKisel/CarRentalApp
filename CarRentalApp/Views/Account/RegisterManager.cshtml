@@ -4,13 +4,11 @@
     ViewBag.Title = "RegisterManager";
 }
 
-<h2>RegisterManager</h2>
-
+<h2>Зарегистрировать нового менеджера</h2>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     <div>
-        <h4>Регистрация нового менеджера</h4>
         <hr />
         @Html.ValidationSummary(true)
         <p>
@@ -43,4 +41,7 @@
         </p>
     </div>
     <input type="submit" value="Зарегистрировать" />
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }

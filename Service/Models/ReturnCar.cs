@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Service.Models
 {
+    // Модель автомобиля, который вернули с аренды
     public class ReturnCar
     {
         [Key]

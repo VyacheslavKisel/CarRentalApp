@@ -1,4 +1,4 @@
-﻿@model Service.Models.Order
+﻿@model Service.ViewModels.OrderCreature
 
 @{
     ViewBag.Title = "Order";
@@ -35,5 +35,9 @@
         @Html.ValidationMessageFor(m => m.AvailabilityDriver)
     </p>
     <input type="submit" value="Сделать заказ" />
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }
 

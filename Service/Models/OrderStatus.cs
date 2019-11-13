@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Service.Models
 {
+    // Модель статуса заказа
     public class OrderStatus
     {
         public int Id { set; get; }

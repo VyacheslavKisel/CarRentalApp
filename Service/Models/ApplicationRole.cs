@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Service.Models
 {
+    // Модель роли пользователя
     public class ApplicationRole : IdentityRole
     {
         public ApplicationRole()

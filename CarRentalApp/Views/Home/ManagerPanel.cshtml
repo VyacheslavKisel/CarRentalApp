@@ -1,10 +1,14 @@
 ﻿
 @{
-    ViewBag.Title = "ManagerPanel";
+    ViewBag.Title = "Кабинет менеджера";
 }
 
-<h2>ManagerPanel</h2>
+<h2>Кабинет менеджера</h2>
 
-@Html.ActionLink("Заказы", "DetailsOrders", "Order")
-@Html.ActionLink("Поврежденные автомобили", "DamageCars", "Home")
+<div class="col-md-12 col-md-3">
+    <ul class="nav">
+        <li>@Html.ActionLink("Заказы", "DetailsOrders", "Order")</li>
+        <li>@Html.ActionLink("Поврежденные автомобили", "DamageCars", "Home")</li>
+    </ul>
+</div>
 

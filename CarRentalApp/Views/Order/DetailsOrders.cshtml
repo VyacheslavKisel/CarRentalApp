@@ -1,16 +1,33 @@
-﻿@model IEnumerable<Service.Models.Order>
+﻿@model IEnumerable<Service.ViewModels.OrderListArticle>
 
 @{
-    ViewBag.Title = "DetailsOrders";
+    ViewBag.Title = "Заказы";
 }
 
-<h2>DetailsOrders</h2>
+<h3>Заказы</h3>
 
-
-<table>
+<table class="table">
+    <tr>
+        <th>
+            Паспортные данные
+        </th>
+        <th>
+            Начальная дата и время
+        </th>
+        <th>
+            Конечная дата и время
+        </th>
+        <th>
+            С водителем или без водителя
+        </th>
+        <th>
+            Название статуса заказа
+        </th>
+        <th></th>
+    </tr>
     @foreach (var item in Model)
     {
-        if (item.OrderStatusId == 1 || item.ManagerProfile.ApplicationUser.Email == User.Identity.Name)
+        if ((item.NameOrderStatus == "Новый") || (item.ManagerEmail == ViewBag.ManagerEmail))
         {
             <tr>
                 <td>
@@ -26,22 +43,7 @@
                     @Html.DisplayFor(modelItem => item.AvailabilityDriver)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Car.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Car.Brand)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Car.QulityClass)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Car.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Invoice)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderStatus.Name)
+                    @Html.DisplayFor(modelItem => item.NameOrderStatus)
                 </td>
 
                 <td>

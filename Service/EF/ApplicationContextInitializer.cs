@@ -8,8 +8,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Service.Models;
 using Microsoft.AspNet.Identity;
 
-namespace Service
+namespace Service.EF
 {
+    // Инициализатор базы данных
     public class ApplicationContextInitializer : CreateDatabaseIfNotExists<ApplicationContext>
     {
         protected override void Seed(ApplicationContext context)
@@ -59,14 +60,13 @@ namespace Service
             context.Cars.Add(new Car { Title = "Mazda 6", Brand = "Mazda", QulityClass = "Бизнес", Price = 1600, AvailabilityNow = true });
             context.Cars.Add(new Car { Title = "Nissan X-Trail", Brand = "Nissan", QulityClass = "Внедорожник", Price = 1750, AvailabilityNow = true });
             context.Cars.Add(new Car { Title = "Toyota Avalon", Brand = "Toyota", QulityClass = "Премиум", Price = 3800, AvailabilityNow = true });
-            context.Cars.Add(new Car { Title = "Citroen", Brand = "Citroen C1", QulityClass = "Эконом", Price = 800, AvailabilityNow = true });
+            context.Cars.Add(new Car { Title = "Citroen С1", Brand = "Citroen", QulityClass = "Эконом", Price = 800, AvailabilityNow = true });
             context.Cars.Add(new Car { Title = "Volkswagen Tiguan", Brand = "Volkswagen", QulityClass = "Внедорожник", Price = 1700, AvailabilityNow = true });
             context.Cars.Add(new Car { Title = "Skoda Octavia A7", Brand = "Skoda", QulityClass = "Стандарт", Price = 1450, AvailabilityNow = true });
             context.Cars.Add(new Car { Title = "BMW X3", Brand = "BMW", QulityClass = "Премиум", Price = 4000, AvailabilityNow = true });
             context.Cars.Add(new Car { Title = "Hyundai i10", Brand = "Hyundai", QulityClass = "Эконом", Price = 950, AvailabilityNow = true });
             context.Cars.Add(new Car { Title = "Hyundai Sonata", Brand = "Hyundai", QulityClass = "Бизнес", Price = 1500, AvailabilityNow = true });
 
-            //Статусы заказов
             context.OrderStatuses.Add(new OrderStatus { Name = "Новый" });
             context.OrderStatuses.Add(new OrderStatus { Name = "Отклоненный" });
             context.OrderStatuses.Add(new OrderStatus { Name = "Согласованный" });

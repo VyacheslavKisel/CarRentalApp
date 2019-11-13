@@ -64,12 +64,20 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.6.8\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
@@ -96,10 +104,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationContext.cs" />
-    <Compile Include="ApplicationContextInitializer.cs" />
-    <Compile Include="ApplicationRoleManager.cs" />
-    <Compile Include="ApplicationUserManager.cs" />
+    <Compile Include="EF\ApplicationContext.cs" />
+    <Compile Include="DataSources\ApplicationRoleManager.cs" />
+    <Compile Include="DataSources\ApplicationUserManager.cs" />
+    <Compile Include="DataSources\CarDataSource.cs" />
+    <Compile Include="DataSources\ClientProfileDataSource.cs" />
+    <Compile Include="DataSources\DamageCarDataSource.cs" />
+    <Compile Include="EF\ApplicationContextInitializer.cs" />
+    <Compile Include="Interfaces\ICarDataSource.cs" />
+    <Compile Include="Interfaces\IClientProfileDataSource.cs" />
+    <Compile Include="Interfaces\IDamageCarDataSource.cs" />
+    <Compile Include="Interfaces\IManagerProfileDataSource.cs" />
+    <Compile Include="Interfaces\IOrderDataSource.cs" />
+    <Compile Include="Interfaces\IReasonRejectionDataSource.cs" />
+    <Compile Include="Interfaces\IReturnCarDataSource.cs" />
+    <Compile Include="DataSources\ManagerProfileDataSource.cs" />
     <Compile Include="Models\ApplicationRole.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Car.cs" />
@@ -110,15 +129,36 @@
     <Compile Include="Models\OrderStatus.cs" />
     <Compile Include="Models\ReasonRejection.cs" />
     <Compile Include="Models\ReturnCar.cs" />
+    <Compile Include="DataSources\OrderDataSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DataSources\ReasonRejectionDataSource.cs" />
+    <Compile Include="DataSources\ReturnCarDataSource.cs" />
     <Compile Include="ViewModels\AcceptModel.cs" />
     <Compile Include="ViewModels\CarsListViewModel.cs" />
+    <Compile Include="ViewModels\CarViewModel.cs" />
+    <Compile Include="ViewModels\DamageCarArticleList.cs" />
+    <Compile Include="ViewModels\DamageCarData.cs" />
+    <Compile Include="ViewModels\FormationReasonDecline.cs" />
+    <Compile Include="ViewModels\FormationReturnCar.cs" />
+    <Compile Include="ViewModels\InvoiceForClient.cs" />
     <Compile Include="ViewModels\LoginModel.cs" />
+    <Compile Include="ViewModels\OrderCreature.cs" />
+    <Compile Include="ViewModels\OrderDisplay.cs" />
+    <Compile Include="ViewModels\OrderListArticle.cs" />
     <Compile Include="ViewModels\RegisterModel.cs" />
+    <Compile Include="ViewModels\UserBlockData.cs" />
+    <Compile Include="ViewModels\UserListArticle.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

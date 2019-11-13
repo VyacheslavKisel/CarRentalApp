@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Service.Models
 {
+    // Модель профиля менеджера
     public class ManagerProfile
     {
         [Key]

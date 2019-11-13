@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Service.Models
 {
-    //Учетные данные пользователя
+    //Модель учетных данных пользователя
     public class ApplicationUser : IdentityUser
     {
         public ApplicationUser()

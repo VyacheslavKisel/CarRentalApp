@@ -6,49 +6,68 @@
 
 @using (Html.BeginForm("Index", "Home", FormMethod.Get))
 {
-    <p>Фильтры</p>
-    <p>
-        Цена
-    </p>
-    <p>
-        <label>В произвольном порядке</label>
-        <input type="radio" name="SortPrice" value="NotSort" checked />
-        <label>По возрастанию</label>
-        <input type="radio" name="SortPrice" value="SortAscending" />
-        <label>По убыванию</label>
-        <input type="radio" name="SortPrice" value="SortDescending" />
-    </p>
-    <p>
-        Название
-    </p>
-    <p>
-        <label>В произвольном порядке</label>
-        <input type="radio" name="SortTitle" value="NotSort" checked />
-        <label>По возрастанию</label>
-        <input type="radio" name="SortTitle" value="SortAscending" />
-        <label>По убыванию</label>
-        <input type="radio" name="SortTitle" value="SortDescending" />
-    </p>
-    <div>
-        <label>Марка: </label>
+    <dl>
+        <dt>
+            Отсортировать по цене:
+        </dt>
+        <dd>
+            <input type="radio" name="SortPrice" value="NotSort" checked />
+            <label>В произвольном порядке</label>
+        </dd>
+        <dd>
+            <input type="radio" name="SortPrice" value="SortAscending" />
+            <label>По возрастанию</label>
+        </dd>
+        <dd>
+            <input type="radio" name="SortPrice" value="SortDescending" />
+            <label>По убыванию</label>
+        </dd>
+    </dl>
+    <dl>
+        <dt>
+            Отсортировать по названию:
+        </dt>
+        <dd>
+            <input type="radio" name="SortTitle" value="NotSort" checked />
+            <label>В произвольном порядке</label>
+        </dd>
+        <dd>
+            <input type="radio" name="SortTitle" value="SortAscending" />
+            <label>По возрастанию</label>
+        </dd>
+        <dd>
+            <input type="radio" name="SortTitle" value="SortDescending" />
+            <label>По убыванию</label>
+        </dd>
+    </dl>
+    <dl>
+        <dt>
+            Марки автомобилей:
+        </dt>
         @foreach (var item in Model.Brands)
         {
-            <label>@item</label>
-            <input type="checkbox" name="BrandsSelected" value="@item" />
+            <dd>
+                <input type="checkbox" name="BrandsSelected" value="@item" />
+                <label>@item</label>
+            </dd>
         }
-    </div>
-    <div>
-        <label>Класс качества: </label>
+    </dl>
+    <dl>
+        <dt>
+            Классы качества:
+        </dt>
         @foreach (var item in Model.QualityClasses)
         {
-            <label>@item</label>
-            <input type="checkbox" name="QualityClassesSelected" value="@item" />
+            <dd>
+                <input type="checkbox" name="QualityClassesSelected" value="@item" />
+                <label>@item</label>
+            </dd>
         }
-    </div>
+    </dl>
     <input type="submit" value="Фильтр" />
 }
 
-<table>
+<table class="table">
     @foreach (var item in Model.Cars)
     {
         if (item.AvailabilityNow == true)
@@ -58,8 +77,11 @@
                 <td>@item.Brand</td>
                 <td>@item.QulityClass</td>
                 <td>@item.Price</td>
-                <td>@Html.RouteLink("Сделать заказ", new { controller = "Order", action = "Order", id = item.Id })</td>
-                @if (User.IsInRole("admin"))
+                @if ((User.IsInRole("user")) || (!User.Identity.IsAuthenticated))
+                {
+                    <td>@Html.RouteLink("Сделать заказ", new { controller = "Order", action = "Order", id = item.Id })</td>
+                }
+                else if (User.IsInRole("admin"))
                 {
                     <td>@Html.RouteLink("Редактировать", new { controller = "Car", action = "EditCar", id = item.Id })</td>
                     <td>@Html.RouteLink("Удалить", new { controller = "Car", action = "DeleteCar", id = item.Id })</td>

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Service.Models
 {
+    // Модель причины отказа в аренде автомобиля
     public class ReasonRejection
     {
         [Key]

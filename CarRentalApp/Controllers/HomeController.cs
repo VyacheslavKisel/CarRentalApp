@@ -9,9 +9,11 @@ using System.Data.Entity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
 using Service.ViewModels;
+using System.Threading.Tasks;
 
 namespace CarRentalApp.Controllers
 {
+    // Контроллер для работы с основными данными
     public class HomeController : Controller
     {
         private ApplicationUserManager UserManager
@@ -30,10 +32,20 @@ namespace CarRentalApp.Controllers
             }
         }
 
-        ApplicationContext _db = new ApplicationContext();
-        public ActionResult Index(CarsListViewModel model)
+        private readonly ICarDataSource _carDataSource;
+        private readonly IDamageCarDataSource _damageCarDataSource;
+        private readonly IClientProfileDataSource _clientProfileDataSource;
+
+        public HomeController()
         {
-            List<Car> cars = _db.Cars.ToList();
+            _carDataSource = new CarDataSource();
+            _damageCarDataSource = new DamageCarDataSource();
+            _clientProfileDataSource = new ClientProfileDataSource();
+        }
+
+        public async Task<ActionResult> Index(CarsListViewModel model)
+        {
+            List<Car> cars = (List<Car>)await _carDataSource.GetCarsAsync();
             List<Car> carsSelected = null;
 
             if (model.BrandsSelected != null && model.QualityClassesSelected != null)
@@ -64,7 +76,7 @@ namespace CarRentalApp.Controllers
                     {
                         if (item.Brand == i)
                         {
-                            if(carsSelected == null)
+                            if (carsSelected == null)
                             {
                                 carsSelected = new List<Car>();
                             }
@@ -94,11 +106,11 @@ namespace CarRentalApp.Controllers
             {
                 carsSelected = cars;
             }
-            if(model.SortPrice == "SortAscending")
+            if (model.SortPrice == "SortAscending")
             {
                 carsSelected = carsSelected.OrderBy(p => p.Price).ToList();
             }
-            else if(model.SortPrice == "SortDescending")
+            else if (model.SortPrice == "SortDescending")
             {
                 carsSelected = carsSelected.OrderByDescending(p => p.Price).ToList();
             }
@@ -114,7 +126,7 @@ namespace CarRentalApp.Controllers
             HashSet<string> qualityClasses = new HashSet<string>();
             brands.Add("Все");
             qualityClasses.Add("Все");
-            var temp = _db.Cars.Select(p => new
+            var temp = cars.Select(p => new
             {
                 Brand = p.Brand,
                 QualityClass = p.QulityClass
@@ -134,25 +146,41 @@ namespace CarRentalApp.Controllers
         }
 
         [Authorize(Roles = "manager, admin")]
-        public ActionResult DamageCars()
+        public async Task<ActionResult> DamageCars()
         {
-            var damageCars = _db.DamageCars.ToList();
-            return View(damageCars);
+            var damageCars = await _damageCarDataSource.GetDamageCarsAsync();
+            List<DamageCarArticleList> damageCarsArticleList = new List<DamageCarArticleList>();
+            foreach (var item in damageCars)
+            {
+                damageCarsArticleList.Add(
+                    new DamageCarArticleList
+                    {
+                        Id = item.Id,
+                        Description = item.Description,
+                        CostRepair = item.CostRepair,
+                        InvoiceMessage = item.InvoiceMessage,
+                        UnderRepairNow = item.UnderRepairNow,
+                        ManagerEmail = item.ReturnCar.Order.ManagerProfile.ApplicationUser.Email
+                    }
+                );
+            }
+            ViewBag.ManagerEmail = User.Identity.Name;
+            return View(damageCarsArticleList);
         }
 
         [HttpPost]
-        public ActionResult DamageCars(DamageCar damageCarModel)
+        public async Task<ActionResult> DamageCars(DamageCarArticleList damageCarArticleList)
         {
-            var damageCar = _db.DamageCars.Find(damageCarModel.Id);
+            var damageCar = await _damageCarDataSource.GetDamageCarAsync(damageCarArticleList.Id);
             damageCar.UnderRepairNow = false;
-            _db.Entry(damageCar).State = EntityState.Modified;
-            if (damageCarModel.UnderRepairNow == false)
+            await _damageCarDataSource.UpdateDamageCarAsync(damageCar);
+            if (damageCarArticleList.UnderRepairNow == false)
             {
-                Car car = _db.Cars.Find(damageCar.ReturnCar.Order.CarId);
+                Car car = await _carDataSource.GetCarAsync(damageCar.ReturnCar.Order.CarId);
                 car.AvailabilityNow = true;
-                _db.Entry(damageCar).State = EntityState.Modified;
+                await _carDataSource.UpdateCarAsync(car);
+                await _damageCarDataSource.UpdateDamageCarAsync(damageCar);
             }
-            _db.SaveChanges();
             return RedirectToAction("DamageCars", "Home");
         }
 
@@ -169,11 +197,26 @@ namespace CarRentalApp.Controllers
         }
 
         [Authorize(Roles = "user")]
-        public ActionResult PersonalArea()
+        public async Task<ActionResult> PersonalArea()
         {
             string currentUserId = User.Identity.GetUserId();
-            ClientProfile profile = _db.ClientProfiles.Find(currentUserId);
-            return View(profile.Orders);
+            ClientProfile profile = await _clientProfileDataSource.GetClientProfileAsync(currentUserId);
+            InvoiceForClient invoiceForClient = new InvoiceForClient();
+            foreach (var item in profile.Orders)
+            {
+                if (item.InvoiceMessage)
+                {
+                    invoiceForClient.InvoiceRental = item.Invoice;
+                }
+                if (item.ReturnCar != null && item.ReturnCar.DamageCar != null)
+                {
+                    if (item.ReturnCar.DamageCar.InvoiceMessage)
+                    {
+                        invoiceForClient.CostRepair = item.ReturnCar.DamageCar.CostRepair;
+                    }
+                }
+            }
+            return View(invoiceForClient);
         }
     }
 }

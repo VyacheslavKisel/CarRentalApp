@@ -1,4 +1,4 @@
-﻿@model Service.Models.Car
+﻿@model Service.ViewModels.CarViewModel
 
 @{
     ViewBag.Title = "EditCar";
@@ -6,10 +6,10 @@
 
 <h2>EditCar</h2>
 
-<h2>Автомобиль № @Model.Id</h2>
 @using (Html.BeginForm())
 {
     @Html.ValidationSummary(true)
+    <input type="hidden" value="@Model.Id" name="Id"/>
     <p>
         <label>Название</label>
         @Html.EditorFor(m => m.Title)

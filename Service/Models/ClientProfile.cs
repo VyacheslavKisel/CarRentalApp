@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Service.Models
 {
-    //Данные профиля клиента
+    //Модель профиля клиента
     public class ClientProfile
     {
         [Key]

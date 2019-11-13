@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Service.ViewModels
 {
+    // Модель представления входа в учетную запись
     public class LoginModel
     {
         [Required]

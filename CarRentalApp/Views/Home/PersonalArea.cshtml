@@ -1,22 +1,55 @@
-﻿@model IEnumerable<Service.Models.Order>
+﻿@model Service.ViewModels.InvoiceForClient
 @{
-    ViewBag.Title = "PersonalArea";
+    ViewBag.Title = "Личный кабинет";
 }
 
-<h2>PersonalArea</h2>
+<h2>Личный кабинет</h2>
 
-@foreach (var item in Model)
+@if (Model.InvoiceRental > 0)
 {
-    if (item.InvoiceMessage)
-    {
-        <p>@item.Invoice</p>
-    }
-    if (item.ReturnCar != null && item.ReturnCar.DamageCar != null)
-    {
-        if (item.ReturnCar.DamageCar.InvoiceMessage)
-        {
-            <p>@item.ReturnCar.DamageCar.CostRepair</p>
-        }
-    }
+    <dl>
+        <dt>
+            Реквизиты для оплаты:
+        </dt>
+        <dd>
+            МФО Банка: 000000
+        </dd>
+        <dd>
+            Код ЕГРПОУ: 00000000
+        </dd>
+        <dd>
+            Банк-получатель: ПАО "АБВ"
+        </dd>
+        <dd>
+            Текущий счет получателя: 00000000000
+        </dd>
+        <dd>
+            Сумма к оплате @Model.InvoiceRental грн.
+        </dd>
+    </dl>
+}
+
+@if (Model.CostRepair > 0)
+{
+    <dl>
+        <dt>
+            Реквизиты для оплаты:
+        </dt>
+        <dd>
+            МФО Банка: 000000
+        </dd>
+        <dd>
+            Код ЕГРПОУ: 00000000
+        </dd>
+        <dd>
+            Банк-получатель: ПАО "АБВ"
+        </dd>
+        <dd>
+            Текущий счет получателя: 00000000000
+        </dd>
+        <dd>
+            Сумма к оплате за ремонт @Model.CostRepair грн.
+        </dd>
+    </dl>
 }
 

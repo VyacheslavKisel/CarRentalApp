@@ -1,7 +1,7 @@
 ﻿@model Service.ViewModels.RegisterModel
 
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Регистрация пользователя";
 }
 
 <h2>Register</h2>
@@ -9,38 +9,41 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-<div>
-    <h4>Регистрация пользователя</h4>
-    <hr />
-    @Html.ValidationSummary(true)
-    <p>
-        Электронный адрес
-        <div>
-            @Html.EditorFor(m => m.Email)
-            @Html.ValidationMessageFor(m => m.Email)
-        </div>
-    </p>
-    <p>
-        Логин
-        <div>
-            @Html.EditorFor(m => m.UserName)
-            @Html.ValidationMessageFor(m => m.UserName)
-        </div>
-    </p>
-    <p>
-        Пароль
-        <div>
-            @Html.EditorFor(m => m.Password)
-            @Html.ValidationMessageFor(m => m.Password)
-        </div>
-    </p>
-    <p>
-        Потвердите пароль
-        <div>
-            @Html.EditorFor(m => m.PasswordConfirm)
-            @Html.ValidationMessageFor(m => m.PasswordConfirm)
-        </div>
-    </p>
-</div>
+    <div>
+        <hr />
+        @Html.ValidationSummary(true)
+        <p>
+            Адрес электронной почты
+            <div>
+                @Html.EditorFor(m => m.Email)
+                @Html.ValidationMessageFor(m => m.Email)
+            </div>
+        </p>
+        <p>
+            Логин
+            <div>
+                @Html.EditorFor(m => m.UserName)
+                @Html.ValidationMessageFor(m => m.UserName)
+            </div>
+        </p>
+        <p>
+            Пароль
+            <div>
+                @Html.EditorFor(m => m.Password)
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
+        </p>
+        <p>
+            Потвердите пароль
+            <div>
+                @Html.EditorFor(m => m.PasswordConfirm)
+                @Html.ValidationMessageFor(m => m.PasswordConfirm)
+            </div>
+        </p>
+    </div>
     <input type="submit" value="Зарегистрироваться" />
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }

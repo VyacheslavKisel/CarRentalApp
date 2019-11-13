@@ -1,13 +1,16 @@
 ﻿
 @{
-    ViewBag.Title = "AdminPanel";
+    ViewBag.Title = "Административная панель";
 }
 
-<h2>AdminPanel</h2>
-
-@Html.ActionLink("Добавить автомобиль", "CreateCar", "Car")
-@Html.ActionLink("Зарегистрировать нового менеджера", "RegisterManager", "Account")
-@Html.ActionLink("Заказы", "DetailsOrders", "Order")
-@Html.ActionLink("Данные о пользователях", "DataUsers", "Account")
+<h2>Административная панель</h2>
+<div class="col-md-12 col-md-3">
+    <ul class="nav">
+        <li>@Html.ActionLink("Данные о пользователях", "DataUsers", "Account")</li>
+        <li>@Html.ActionLink("Зарегистрировать нового менеджера", "RegisterManager", "Account")</li>
+        <li>@Html.ActionLink("Заказы", "DetailsOrders", "Order")</li>
+        <li>@Html.ActionLink("Добавить автомобиль", "CreateCar", "Car")</li>
+    </ul>
+</div>
 
 
